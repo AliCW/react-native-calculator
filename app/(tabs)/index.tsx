@@ -4,53 +4,140 @@ import { useState } from 'react';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { View, Text } from 'react-native';
 
-import Display from '../../components/display';
-
-type QueryProps = {
-  sum: string;
-}
-
-const ProcessQuery = (props: QueryProps) => {
-  return (
-      <Display sum={props.sum}/>
-  )
-}
+import Display from '../../components/Display';
+import { calc } from 'a-calc/es'
 
 export default function HomeScreen() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
+  const [output, setOutput] = useState('');
+  const [queryHistory, setQueryHistory] = useState(['']);
+  const [recentEquate, setRecentEquate] = useState(false);
 
+  const pressDecimal = () => {
+    setRecentEquate(false);
+    setQuery(query + '.')
+  };
   const pressZero = () => {
-    setQuery(query + "0");
-  }
+    if(recentEquate){
+      setQuery('0');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '0');
+    };
+  };
   const pressOne = () => {
-    setQuery(query + "1");
+    if(recentEquate){
+      setQuery('1');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '1');
+    }
   };
   const pressTwo = () => {
-    setQuery(query + "2");
+    if(recentEquate){
+      setQuery('2');
+      setRecentEquate(false);      
+    } else {
+      setQuery(query + '2');
+    }
   };
   const pressThree = () => {
-    setQuery(query + "3");
+    if(recentEquate){
+      setQuery('3');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '3');
+    }
   };
   const pressFour = () => {
-    setQuery(query + "4");
+    if(recentEquate){
+      setQuery('4');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '4');
+    }
   };
   const pressFive = () => {
-    setQuery(query + "5");
+    if(recentEquate){
+      setQuery('5');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '5');
+    }
   };
   const pressSix = () => {
-    setQuery(query + "6");
+    if(recentEquate){
+      setQuery('6');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '6');
+    }
   };
   const pressSeven = () => {
-    setQuery(query + "7");
+    if(recentEquate){
+      setQuery('7');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '7');
+    }
   };
   const pressEight = () => {
-    setQuery(query + "8");
+    if(recentEquate){
+      setQuery('8');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '8');
+    }
   };
   const pressNine = () => {
-    setQuery(query + "9");
+    if(recentEquate){
+      setQuery('9');
+      setRecentEquate(false);
+    } else {
+      setQuery(query + '9');
+    }
   };
+
+  const pressPlus = () => {
+    setRecentEquate(false);
+    setQuery(query + '+');
+  };
+  const pressSubtract = () => {
+    setRecentEquate(false);
+    setQuery(query + '-');
+  };
+  const pressMultiply = () => {
+    setRecentEquate(false);
+    setQuery(query + '*');
+  };
+  const pressDivide = () => {
+    setRecentEquate(false);
+    setQuery(query + '/');
+  };
+  const pressEquate = () => {
+    if(query.length === 0) return;
+    const split = query.split(/([?=+ ?=* ?=/ ?=-])/g);
+    const check = split.map((element) => {
+      if(/[+*/-]/g.test(element) === true){
+        return ' ' + element + ' ';
+      } else {
+        return element;
+      }
+    })
+    setRecentEquate(true);
+    setQueryHistory([...queryHistory, query])
+    setOutput(calc(check.join()));
+    setQuery(calc(check.join()));
+  };
+
+  const pressClear = () => {
+    setOutput('');
+    setQuery('');
+    setQueryHistory([]);
+    setRecentEquate(false);
+  }
 
 
   return (
@@ -62,51 +149,95 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-        <ThemedText type="title">Calc!</ThemedText>
+        <Text style={styles.titleContainer}>Calc!</Text>
         <HelloWave />
-      <ThemedView style={styles.titleContainer}>
-        <Button
-          onPress={pressZero}
-          title="0"
-        />
+      
+      
+      <View style={styles.numberContainer}>
+
+<View style={styles.firstNumberContainer}>
         <Button
           onPress={pressOne}
-          title="1"
-        />
-        <Button
-          onPress={pressTwo}
-          title="2"
-        />
-        <Button
-          onPress={pressThree}
-          title="3"
+          title='1'
         />
         <Button
           onPress={pressFour}
-          title="4"
-        />
-        <Button
-          onPress={pressFive}
-          title="5"
-        />
-        <Button
-          onPress={pressSix}
-          title="6"
+          title='4'
         />
         <Button
           onPress={pressSeven}
-          title="7"
+          title='7'
+        />
+</View>
+<View style={styles.firstNumberContainer}>
+        <Button
+          onPress={pressTwo}
+          title='2'
+        />
+        <Button
+          onPress={pressFive}
+          title='5'
         />
         <Button
           onPress={pressEight}
-          title="8"
+          title='8'
+        />
+</View>
+<View style={styles.firstNumberContainer}>
+        <Button
+          onPress={pressThree}
+          title='3'
+        />
+        <Button
+          onPress={pressSix}
+          title='6'
         />
         <Button
           onPress={pressNine}
-          title="9"
+          title='9'
         />
-      </ThemedView>
-      <ProcessQuery sum={query} />
+
+          <Button
+            onPress={pressZero}
+            title='0'
+            />
+
+          <Button
+            onPress={pressDecimal}
+            title='.'
+            />
+
+  </View>
+<View style={styles.firstNumberContainer}>
+        <Button
+            onPress={pressPlus}
+            title='+'
+          />
+          <Button
+            onPress={pressSubtract}
+            title='-'
+          />
+          <Button
+            onPress={pressMultiply}
+            title='*'
+          />
+          <Button
+            onPress={pressDivide}
+            title='/'
+          />
+<View style={styles.thirdNumberContainer}>
+          <Button
+            onPress={pressClear}
+            title='clear'
+          />
+          <Button 
+            onPress={pressEquate}
+            title='='
+        />
+</View>
+</View>
+      </View>
+      <Display output={output} sum={query} history={queryHistory}/>
 
     </ParallaxScrollView>
   );
@@ -118,13 +249,51 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
+  numberContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 3,
+    height: 'auto',
+    width: 'auto',
+    
+  },
+  firstNumberContainer: {
+    height: '20%',
+    width: '30%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '10%',
+    paddingTop: '1%',
+    paddingBottom: '1%',
+
+
+  },
+  secondNumberContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    height: 'auto',
+
+    
+  },
+
+  thirdNumberContainer: {
+    height: 'auto',
+    width: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: '10%',
+    paddingTop: '1%',
+    paddingBottom: '1%',
+
+
+  },
   stepContainer: {
     gap: 8,
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
+    height: 0,
+    width: 0,
     bottom: 0,
     left: 0,
     position: 'absolute',
