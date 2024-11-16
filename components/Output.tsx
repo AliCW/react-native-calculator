@@ -4,6 +4,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { View, Text } from 'react-native';
 import { useState } from 'react';
 
 interface Answer {
@@ -16,13 +17,20 @@ export default function Output(props: Answer){
 
     return (
          <ThemedView style={styles.outputContainer}>
+          <View >
           <ThemedText type="title">Query: {props.sum}</ThemedText>
+          </View>
+
+          <View>
             <ThemedText type="title">Answer: {props.output}</ThemedText>
+          </View>
+
+
             <ThemedView>
               {props.history.map((query) => {
                 return (
                   <ThemedView>
-                    <ThemedText>{query}</ThemedText>
+                    <ThemedText key={query}>{query}</ThemedText>
                   </ThemedView>
                 )
               })}
@@ -37,6 +45,7 @@ const styles = StyleSheet.create({
     outputContainer: {
       flex: 1,
       flexDirection: 'row',
+      flexWrap: 'wrap',
       alignItems: 'center',
       gap: 8,
     },

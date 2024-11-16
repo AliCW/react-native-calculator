@@ -142,154 +142,152 @@ export default function HomeScreen() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require("@/assets/images/partial-react-logo.png")}
           style={styles.reactLogo}
         />
-      }>
-        <Text style={styles.titleContainer}>Calc!</Text>
-        <HelloWave />
-      
-      
+      }
+    >
+      <Text style={styles.titleContainer}>Calc!</Text>
+
       <View style={styles.numberContainer}>
+        <View style={styles.firstNumberContainer}>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressOne} title="1" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressTwo} title="2" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressThree} title="3" />
+          </View>
+          <View
+            style={{
+              width: 60,
+              paddingLeft: 5,
+              paddingTop: 10,
+              paddingBottom: 5,
+            }}
+          >
+            <Button onPress={pressDivide} title="/" />
+          </View>
+        </View>
+        <View style={styles.firstNumberContainer}>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressFour} title="4" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressFive} title="5" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressSix} title="6" />
+          </View>
 
-<View style={styles.firstNumberContainer}>
-        <Button
-          onPress={pressOne}
-          title='1'
-        />
-        <Button
-          onPress={pressFour}
-          title='4'
-        />
-        <Button
-          onPress={pressSeven}
-          title='7'
-        />
-</View>
-<View style={styles.firstNumberContainer}>
-        <Button
-          onPress={pressTwo}
-          title='2'
-        />
-        <Button
-          onPress={pressFive}
-          title='5'
-        />
-        <Button
-          onPress={pressEight}
-          title='8'
-        />
-</View>
-<View style={styles.firstNumberContainer}>
-        <Button
-          onPress={pressThree}
-          title='3'
-        />
-        <Button
-          onPress={pressSix}
-          title='6'
-        />
-        <Button
-          onPress={pressNine}
-          title='9'
-        />
+          <View
+            style={{
+              width: 60,
+              paddingLeft: 5,
+              paddingTop: 10,
+              paddingBottom: 5,
+            }}
+          >
+            <Button onPress={pressMultiply} title="*" />
+          </View>
+        </View>
+        <View style={styles.firstNumberContainer}>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressSeven} title="7" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressEight} title="8" />
+          </View>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <Button onPress={pressNine} title="9" />
+          </View>
+          <View
+            style={{
+              width: 60,
+              paddingLeft: 5,
+              paddingTop: 10,
+              paddingBottom: 5,
+            }}
+          >
+            <Button onPress={pressSubtract} title="-" />
+          </View>
+        </View>
+        <View style={styles.secondNumberContainer}>
+          <View style={{ width: 75, paddingTop: 5, paddingBottom: 5 }}>
+          <Button onPress={pressDecimal} title="." />
+          </View>
+          <View style={{ width: 75, paddingTop: 5, paddingBottom: 5 }}>
+          <Button onPress={pressZero} title="0" />
+          </View>
+          <View style={{ width: 60, paddingLeft: 5, paddingTop: 5, paddingBottom: 5 }}>
+          <Button onPress={pressPlus} title="+" />
+          </View>
+        </View>
 
-          <Button
-            onPress={pressZero}
-            title='0'
-            />
-
-          <Button
-            onPress={pressDecimal}
-            title='.'
-            />
-
-  </View>
-<View style={styles.firstNumberContainer}>
-        <Button
-            onPress={pressPlus}
-            title='+'
-          />
-          <Button
-            onPress={pressSubtract}
-            title='-'
-          />
-          <Button
-            onPress={pressMultiply}
-            title='*'
-          />
-          <Button
-            onPress={pressDivide}
-            title='/'
-          />
-<View style={styles.thirdNumberContainer}>
-          <Button
-            onPress={pressClear}
-            title='clear'
-          />
-          <Button 
-            onPress={pressEquate}
-            title='='
-        />
-</View>
-</View>
+        <View style={styles.equalsNumberContainer}>
+          <View style={{width: 170, paddingTop: 10}}>
+          <Button onPress={pressEquate} title="=" />
+          </View>
+        </View>
       </View>
-      <Display output={output} sum={query} history={queryHistory}/>
 
+      <View style={styles.clearNumberContainer}>
+        <View style={{ width: 120}}>
+        <Button onPress={pressClear} title="clear" />
+        </View>
+      </View>
+      <Display output={output} sum={query} history={queryHistory} />
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+
+
   },
   numberContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 3,
-    height: 'auto',
-    width: 'auto',
-    
+
+
+
+
   },
   firstNumberContainer: {
-    height: '20%',
-    width: '30%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: '10%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
+    alignItems: 'flex-start',
 
+    flexDirection: 'row',
+    gap: 2,
+
+    margin: 'auto',
+    padding: 5,
 
   },
   secondNumberContainer: {
+    alignItems: 'flex-start',
+    marginLeft: '28.5%',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    height: 'auto',
+    gap: 2,
 
     
+    
   },
+  equalsNumberContainer: {
+    flexDirection: 'row',
 
-  thirdNumberContainer: {
-    height: 'auto',
-    width: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: '10%',
-    paddingTop: '1%',
-    paddingBottom: '1%',
+
+    margin: 'auto',
 
 
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  clearNumberContainer: {
+    margin: 'auto',
+
+    
   },
   reactLogo: {
     height: 0,
@@ -299,3 +297,63 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
+// const styles = StyleSheet.create({
+//   titleContainer: {
+
+
+//     gap: 8,
+//   },
+//   numberContainer: {
+//     alignContent: 'center',
+
+
+
+//   },
+//   firstNumberContainer: {
+//     alignItems: 'flex-start',
+
+//     flexDirection: 'row',
+
+//     gap: 4,
+//     margin: 'auto',
+//     width: '100%',
+
+//     padding: '2%',
+
+
+//   },
+//   secondNumberContainer: {
+
+//     alignItems: 'flex-start',
+
+//     flexDirection: 'row',
+//     marginLeft: '40%',
+//     gap: 4,
+    
+
+//     padding: '2%',
+    
+//   },
+//   clearNumberContainer: {
+
+//     alignItems: 'flex-start',
+  
+//     flexDirection: 'row',
+//     marginLeft: '40%',
+//     gap: 4,
+    
+
+//     padding: '2%',
+    
+//   },
+//   equalsNumberContainer: {
+
+//   },
+//   reactLogo: {
+//     height: 0,
+//     width: 0,
+//     bottom: 0,
+//     left: 0,
+//     position: 'absolute',
+//   },
+// });
