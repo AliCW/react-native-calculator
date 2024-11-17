@@ -97,4 +97,8 @@ describe('Given a string representing numbers & symbols, split the string & retu
         const string = "700/7*52";
         expect(calc(string)).toBe("5200");
     });
+    test('Given "-8+9", return 1 - single sum, leading negative number input', () => {
+        const string = "-8+9"
+        expect(calc(string)).toBe("1");
+    });
 });

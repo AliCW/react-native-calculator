@@ -35,7 +35,7 @@ export default function Output(props: Answer) {
       >
         {props.history.map((query) => {
           return (
-            <View>
+            <View key={query}>
               <Text style={{ color: "#808080", paddingTop: 3, paddingLeft: 10, }} key={query}>
                 {query}
               </Text>

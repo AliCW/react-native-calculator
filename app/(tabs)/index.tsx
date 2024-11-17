@@ -9,15 +9,13 @@ export default function HomeScreen() {
   const [output, setOutput] = useState("");
   const [queryHistory, setQueryHistory] = useState([""]);
   const [recentEquate, setRecentEquate] = useState(false);
+  const [recentDecimal, setRecentDecimal] = useState(false);
 
-  const pressDecimal = () => {
-    setRecentEquate(false);
-    setQuery(query + ".");
-  };
   const pressZero = () => {
     if (recentEquate) {
       setQuery("0");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "0");
     }
@@ -26,6 +24,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("1");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "1");
     }
@@ -34,6 +33,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("2");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "2");
     }
@@ -42,6 +42,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("3");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "3");
     }
@@ -50,6 +51,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("4");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "4");
     }
@@ -58,6 +60,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("5");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "5");
     }
@@ -66,6 +69,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("6");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "6");
     }
@@ -74,6 +78,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("7");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "7");
     }
@@ -82,6 +87,7 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("8");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "8");
     }
@@ -90,18 +96,35 @@ export default function HomeScreen() {
     if (recentEquate) {
       setQuery("9");
       setRecentEquate(false);
+      setRecentDecimal(false);
     } else {
       setQuery(query + "9");
     }
   };
 
-  const pressPlus = () => {
+  const pressDecimal = () => {
     if (
-      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      /[+*/-]/g.test(query[query.length - 1]) ||
+      recentDecimal ||
       query.length === 0
     ) {
       return;
     } else {
+      setRecentDecimal(true);
+      setRecentEquate(false);
+      setQuery(query + ".");
+
+    }
+  };
+
+  const pressPlus = () => {
+    if (
+      /[+*/-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentDecimal(false);
       setRecentEquate(false);
       setQuery(query + "+");
     }
@@ -109,11 +132,11 @@ export default function HomeScreen() {
 
   const pressSubtract = () => {
     if (
-      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
-      query.length === 0
+      /[+*/-]/g.test(query[query.length - 1])
     ) {
       return;
     } else {
+      setRecentDecimal(false);
       setRecentEquate(false);
       setQuery(query + "-");
     }
@@ -121,11 +144,12 @@ export default function HomeScreen() {
 
   const pressMultiply = () => {
     if (
-      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      /[+*/-]/g.test(query[query.length - 1]) ||
       query.length === 0
     ) {
       return;
     } else {
+      setRecentDecimal(false);
       setRecentEquate(false);
       setQuery(query + "*");
     }
@@ -133,11 +157,12 @@ export default function HomeScreen() {
 
   const pressDivide = () => {
     if (
-      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      /[+*/-]/g.test(query[query.length - 1]) ||
       query.length === 0
     ) {
       return;
     } else {
+      setRecentDecimal(false);
       setRecentEquate(false);
       setQuery(query + "/");
     }
@@ -150,26 +175,23 @@ export default function HomeScreen() {
     )
       return;
     const split = query.split(/([?=+ ?=* ?=/ ?=-])/g);
-    const check = split.map((element) => {
-      if (/[+*/-]/g.test(element) === true) {
-        return " " + element + " ";
-      } else {
-        return element;
-      }
-    });
+    setRecentDecimal(false);
     setRecentEquate(true);
-    setOutput(calc(check.join()));
+    setOutput(calc(split.join('')));
     if (queryHistory.length >= 6) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, query + `= ${calc(check.join())}`].reverse()
+        [...queryHistory, query + `= ${calc(split.join(''))}`].reverse()
       );
     } else {
       setQueryHistory(
-        [...queryHistory, query + `= ${calc(check.join())}`].reverse()
+        [...queryHistory, query + `= ${calc(split.join(''))}`].reverse()
       );
     }
-    setQuery(calc(check.join()));
+    setQuery(calc(split.join('')));
+    if(/[.]/g.test(calc(split.join('')))){
+      setRecentDecimal(true);
+    }
   };
 
   const pressClear = () => {
@@ -177,6 +199,7 @@ export default function HomeScreen() {
     setQuery("");
     setQueryHistory([]);
     setRecentEquate(false);
+    setRecentDecimal(false);
   };
 
   return (
@@ -189,9 +212,7 @@ export default function HomeScreen() {
         />
       }
     >
-      {/* <View>
-        <Text style={styles.titleText}>Calc!</Text>
-      </View> */}
+
       <View style={styles.numberContainer}>
         <View style={styles.firstNumberContainer}>
           <View
@@ -336,7 +357,17 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
         </View>
+
         <View style={styles.secondNumberContainer}>
+        <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+                onPress={pressClear}
+                style={styles.clearButton}
+                accessibilityLabel="clear"
+            >
+              <Text style={styles.symbolText}>C</Text>
+            </TouchableOpacity>
+        </View>
           <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
               onPress={pressDecimal}
@@ -384,17 +415,6 @@ export default function HomeScreen() {
               <Text style={styles.equalsText}>=</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </View>
-      <View style={styles.clearNumberContainer}>
-        <View style={{ width: 120 }}>
-          <TouchableOpacity
-            onPress={pressClear}
-            style={styles.clearButton}
-            accessibilityLabel="clear"
-          >
-            <Text style={styles.clearText}>clear</Text>
-          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.outputContainer}>
@@ -446,6 +466,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   symbolButton: {
+    width: 75,
     height: 75,
     borderRadius: 5,
     backgroundColor: "#424242",
@@ -468,7 +489,7 @@ const styles = StyleSheet.create({
   },
   secondNumberContainer: {
     alignItems: "flex-start",
-    marginLeft: "28.5%",
+    margin: "auto",
     flexDirection: "row",
     gap: 5,
     paddingTop: 5,
@@ -494,7 +515,7 @@ const styles = StyleSheet.create({
   },
   clearButton: {
     backgroundColor: "#424242",
-    height: 40,
+    height: 75,
     borderRadius: 5,
   },
   clearText: {
