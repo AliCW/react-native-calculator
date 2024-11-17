@@ -127,9 +127,14 @@ export default function HomeScreen() {
       }
     })
     setRecentEquate(true);
-    setQueryHistory([...queryHistory, query])
     setOutput(calc(check.join()));
-    setQuery(calc(check.join()));
+    if(queryHistory.length >= 6){
+      queryHistory.shift()
+      setQueryHistory([...queryHistory, query + `= ${calc(check.join())}`])
+    } else {
+      setQueryHistory([...queryHistory, query + `= ${calc(check.join())}`])
+    }
+    setQuery("");
   };
 
   const pressClear = () => {
@@ -154,14 +159,14 @@ export default function HomeScreen() {
 
       <View style={styles.numberContainer}>
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressOne} title="1" />
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5, }}>
+            <Button onPress={pressOne} title="1" color="#AE1D5C" accessibilityLabel="1"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressTwo} title="2" />
+            <Button onPress={pressTwo} title="2" color="#AE1D5C" accessibilityLabel="2"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressThree} title="3" />
+            <Button onPress={pressThree} title="3" color="#AE1D5C" accessibilityLabel="3"/>
           </View>
           <View
             style={{
@@ -171,18 +176,18 @@ export default function HomeScreen() {
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressDivide} title="/" />
+            <Button onPress={pressDivide} title="/" color="#424242" accessibilityLabel="divide by"/>
           </View>
         </View>
         <View style={styles.firstNumberContainer}>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressFour} title="4" />
+            <Button onPress={pressFour} title="4" color="#AE1D5C" accessibilityLabel="4"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressFive} title="5" />
+            <Button onPress={pressFive} title="5" color="#AE1D5C" accessibilityLabel="5"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressSix} title="6" />
+            <Button onPress={pressSix} title="6" color="#AE1D5C" accessibilityLabel="6"/>
           </View>
 
           <View
@@ -193,18 +198,18 @@ export default function HomeScreen() {
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressMultiply} title="*" />
+            <Button onPress={pressMultiply} title="*" color="#424242" accessibilityLabel="multiplied by"/>
           </View>
         </View>
         <View style={styles.firstNumberContainer}>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressSeven} title="7" />
+            <Button onPress={pressSeven} title="7" color="#AE1D5C" accessibilityLabel="7"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressEight} title="8" />
+            <Button onPress={pressEight} title="8" color="#AE1D5C" accessibilityLabel="8" />
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressNine} title="9"/>
+            <Button onPress={pressNine} title="9" color="#AE1D5C" accessibilityLabel="9"/>
           </View>
           <View
             style={{
@@ -214,31 +219,31 @@ export default function HomeScreen() {
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressSubtract} title="-" />
+            <Button onPress={pressSubtract} title="-" color="#424242" accessibilityLabel="minus"/>
           </View>
         </View>
         <View style={styles.secondNumberContainer}>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressDecimal} title="." />
+          <Button onPress={pressDecimal} title="." color="#AE1D5C" accessibilityLabel="point"/>
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressZero} title="0" />
+          <Button onPress={pressZero} title="0" color="#AE1D5C" accessibilityLabel="0"/>
           </View>
           <View style={{ width: 60, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressPlus} title="+" />
+          <Button onPress={pressPlus} title="+" color="#424242" accessibilityLabel="plus"/>
           </View>
         </View>
 
         <View style={styles.equalsNumberContainer}>
           <View style={{width: 170, paddingTop: 10}}>
-          <Button onPress={pressEquate} title="=" />
+          <Button onPress={pressEquate} title="=" color="#FF6F00" accessibilityLabel="equate"/>
           </View>
         </View>
       </View>
 
       <View style={styles.clearNumberContainer}>
         <View style={{ width: 120}}>
-        <Button onPress={pressClear} title="clear" />
+        <Button onPress={pressClear} title="clear" color="#424242" accessibilityLabel="clear"/>
         </View>
       </View>
       <Display output={output} sum={query} history={queryHistory} />
