@@ -204,7 +204,7 @@ export default function HomeScreen() {
             <Button onPress={pressEight} title="8" />
           </View>
           <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressNine} title="9" />
+            <Button onPress={pressNine} title="9"/>
           </View>
           <View
             style={{
@@ -218,13 +218,13 @@ export default function HomeScreen() {
           </View>
         </View>
         <View style={styles.secondNumberContainer}>
-          <View style={{ width: 75, paddingTop: 5, paddingBottom: 5 }}>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
           <Button onPress={pressDecimal} title="." />
           </View>
-          <View style={{ width: 75, paddingTop: 5, paddingBottom: 5 }}>
+          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
           <Button onPress={pressZero} title="0" />
           </View>
-          <View style={{ width: 60, paddingLeft: 5, paddingTop: 5, paddingBottom: 5 }}>
+          <View style={{ width: 60, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
           <Button onPress={pressPlus} title="+" />
           </View>
         </View>
@@ -249,6 +249,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   titleContainer: {
 
+    fontSize: 75,
+    fontWeight: 'bold',
 
   },
   numberContainer: {
