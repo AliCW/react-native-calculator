@@ -1,12 +1,6 @@
-import { Image, StyleSheet, Platform, Button } from "react-native";
-import { calc, fmt } from "a-calc";
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { View, Text } from "react-native";
-import { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 interface Answer {
-  sum: string;
   output: string;
   history: string[];
 }
@@ -14,25 +8,10 @@ interface Answer {
 export default function Output(props: Answer) {
   return (
     <View style={styles.outputContainer}>
-      <View
-        style={{
-          backgroundColor: "#eeeeee",
-          width: 320,
-          borderRadius: 10,
-          paddingTop: 15,
-          paddingBottom: 10,
-          paddingLeft: 10,
-          marginBottom: 5,
-        }}
-      >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Query: {props.sum}
-        </Text>
-      </View>
 
       <View
         style={{
-          backgroundColor: "#eeeeee",
+          backgroundColor: "#FDAE72",
           width: 320,
           borderRadius: 10,
           paddingTop: 15,
@@ -42,7 +21,7 @@ export default function Output(props: Answer) {
         }}
       >
         <Text style={{ fontSize: 25, fontWeight: "bold" }}>
-          = {props.output}
+          {props.output}
         </Text>
       </View>
 

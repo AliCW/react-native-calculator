@@ -1,149 +1,183 @@
-import { Image, StyleSheet, Platform, Button } from 'react-native';
-import { useState } from 'react';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { View, Text } from 'react-native';
-
-import Display from '../../components/Display';
-import { calc } from 'a-calc/es'
+import { View, Text, Image, StyleSheet, Button, TextInput, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import Output from "../../components/Output";
+import { calc } from "a-calc/es";
 
 export default function HomeScreen() {
-  const [query, setQuery] = useState('');
-  const [output, setOutput] = useState('');
-  const [queryHistory, setQueryHistory] = useState(['']);
+  const [query, setQuery] = useState("");
+  const [output, setOutput] = useState("");
+  const [queryHistory, setQueryHistory] = useState([""]);
   const [recentEquate, setRecentEquate] = useState(false);
 
   const pressDecimal = () => {
     setRecentEquate(false);
-    setQuery(query + '.')
+    setQuery(query + ".");
   };
   const pressZero = () => {
-    if(recentEquate){
-      setQuery('0');
+    if (recentEquate) {
+      setQuery("0");
       setRecentEquate(false);
     } else {
-      setQuery(query + '0');
-    };
+      setQuery(query + "0");
+    }
   };
   const pressOne = () => {
-    if(recentEquate){
-      setQuery('1');
+    if (recentEquate) {
+      setQuery("1");
       setRecentEquate(false);
     } else {
-      setQuery(query + '1');
+      setQuery(query + "1");
     }
   };
   const pressTwo = () => {
-    if(recentEquate){
-      setQuery('2');
-      setRecentEquate(false);      
+    if (recentEquate) {
+      setQuery("2");
+      setRecentEquate(false);
     } else {
-      setQuery(query + '2');
+      setQuery(query + "2");
     }
   };
   const pressThree = () => {
-    if(recentEquate){
-      setQuery('3');
+    if (recentEquate) {
+      setQuery("3");
       setRecentEquate(false);
     } else {
-      setQuery(query + '3');
+      setQuery(query + "3");
     }
   };
   const pressFour = () => {
-    if(recentEquate){
-      setQuery('4');
+    if (recentEquate) {
+      setQuery("4");
       setRecentEquate(false);
     } else {
-      setQuery(query + '4');
+      setQuery(query + "4");
     }
   };
   const pressFive = () => {
-    if(recentEquate){
-      setQuery('5');
+    if (recentEquate) {
+      setQuery("5");
       setRecentEquate(false);
     } else {
-      setQuery(query + '5');
+      setQuery(query + "5");
     }
   };
   const pressSix = () => {
-    if(recentEquate){
-      setQuery('6');
+    if (recentEquate) {
+      setQuery("6");
       setRecentEquate(false);
     } else {
-      setQuery(query + '6');
+      setQuery(query + "6");
     }
   };
   const pressSeven = () => {
-    if(recentEquate){
-      setQuery('7');
+    if (recentEquate) {
+      setQuery("7");
       setRecentEquate(false);
     } else {
-      setQuery(query + '7');
+      setQuery(query + "7");
     }
   };
   const pressEight = () => {
-    if(recentEquate){
-      setQuery('8');
+    if (recentEquate) {
+      setQuery("8");
       setRecentEquate(false);
     } else {
-      setQuery(query + '8');
+      setQuery(query + "8");
     }
   };
   const pressNine = () => {
-    if(recentEquate){
-      setQuery('9');
+    if (recentEquate) {
+      setQuery("9");
       setRecentEquate(false);
     } else {
-      setQuery(query + '9');
+      setQuery(query + "9");
     }
   };
 
   const pressPlus = () => {
-    setRecentEquate(false);
-    setQuery(query + '+');
+    if (
+      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentEquate(false);
+      setQuery(query + "+");
+    }
   };
+
   const pressSubtract = () => {
-    setRecentEquate(false);
-    setQuery(query + '-');
+    if (
+      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentEquate(false);
+      setQuery(query + "-");
+    }
   };
+
   const pressMultiply = () => {
-    setRecentEquate(false);
-    setQuery(query + '*');
+    if (
+      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentEquate(false);
+      setQuery(query + "*");
+    }
   };
+
   const pressDivide = () => {
-    setRecentEquate(false);
-    setQuery(query + '/');
+    if (
+      /[?=+ ?=* ?=/ ?=-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentEquate(false);
+      setQuery(query + "/");
+    }
   };
+
   const pressEquate = () => {
-    if(query.length === 0) return;
+    if (
+      /[+*/-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    )
+      return;
     const split = query.split(/([?=+ ?=* ?=/ ?=-])/g);
     const check = split.map((element) => {
-      if(/[+*/-]/g.test(element) === true){
-        return ' ' + element + ' ';
+      if (/[+*/-]/g.test(element) === true) {
+        return " " + element + " ";
       } else {
         return element;
       }
-    })
+    });
     setRecentEquate(true);
     setOutput(calc(check.join()));
-    if(queryHistory.length >= 6){
-      queryHistory.shift()
-      setQueryHistory([...queryHistory, query + `= ${calc(check.join())}`])
+    if (queryHistory.length >= 6) {
+      queryHistory.shift();
+      setQueryHistory(
+        [...queryHistory, query + `= ${calc(check.join())}`].reverse()
+      );
     } else {
-      setQueryHistory([...queryHistory, query + `= ${calc(check.join())}`])
+      setQueryHistory(
+        [...queryHistory, query + `= ${calc(check.join())}`].reverse()
+      );
     }
-    setQuery("");
+    setQuery(calc(check.join()));
   };
 
   const pressClear = () => {
-    setOutput('');
-    setQuery('');
+    setOutput("");
+    setQuery("");
     setQueryHistory([]);
     setRecentEquate(false);
-  }
-
+  };
 
   return (
     <ParallaxScrollView
@@ -155,212 +189,335 @@ export default function HomeScreen() {
         />
       }
     >
-      <Text style={styles.titleContainer}>Calc!</Text>
-
+      {/* <View>
+        <Text style={styles.titleText}>Calc!</Text>
+      </View> */}
       <View style={styles.numberContainer}>
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5, }}>
-            <Button onPress={pressOne} title="1" color="#AE1D5C" accessibilityLabel="1"/>
+          <View
+            style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}
+          >
+            <TouchableOpacity
+              onPress={pressOne}
+              style={styles.numberButton}
+              accessibilityLabel="1"
+            >
+              <Text style={styles.numberText}>1</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressTwo} title="2" color="#AE1D5C" accessibilityLabel="2"/>
+          <View
+            style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}
+          >
+            <TouchableOpacity
+              onPress={pressTwo}
+              style={styles.numberButton}
+              accessibilityLabel="2"
+            >
+              <Text style={styles.numberText}>2</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressThree} title="3" color="#AE1D5C" accessibilityLabel="3"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressThree}
+              style={styles.numberButton}
+              accessibilityLabel="3"
+            >
+              <Text style={styles.numberText}>3</Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
               width: 60,
+              height: 75,
               paddingLeft: 5,
               paddingTop: 10,
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressDivide} title="/" color="#424242" accessibilityLabel="divide by"/>
+            <TouchableOpacity
+              onPress={pressDivide}
+              style={styles.symbolButton}
+              accessibilityLabel="divide by"
+            >
+              <Text style={styles.symbolText}>÷</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressFour} title="4" color="#AE1D5C" accessibilityLabel="4"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressFour}
+              style={styles.numberButton}
+              accessibilityLabel="4"
+            >
+              <Text style={styles.numberText}>4</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressFive} title="5" color="#AE1D5C" accessibilityLabel="5"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressFive}
+              style={styles.numberButton}
+              accessibilityLabel="5"
+            >
+              <Text style={styles.numberText}>5</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressSix} title="6" color="#AE1D5C" accessibilityLabel="6"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressSix}
+              style={styles.numberButton}
+              accessibilityLabel="6"
+            >
+              <Text style={styles.numberText}>6</Text>
+            </TouchableOpacity>
           </View>
 
           <View
             style={{
               width: 60,
+              height: 75,
               paddingLeft: 5,
               paddingTop: 10,
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressMultiply} title="*" color="#424242" accessibilityLabel="multiplied by"/>
+            <TouchableOpacity
+              onPress={pressMultiply}
+              style={styles.symbolButton}
+              accessibilityLabel="multiplied by"
+            >
+              <Text style={styles.symbolText}>*</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressSeven} title="7" color="#AE1D5C" accessibilityLabel="7"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressSeven}
+              style={styles.numberButton}
+              accessibilityLabel="7"
+            >
+              <Text style={styles.numberText}>7</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressEight} title="8" color="#AE1D5C" accessibilityLabel="8" />
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressEight}
+              style={styles.numberButton}
+              accessibilityLabel="8"
+            >
+              <Text style={styles.numberText}>8</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-            <Button onPress={pressNine} title="9" color="#AE1D5C" accessibilityLabel="9"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressNine}
+              style={styles.numberButton}
+              accessibilityLabel="9"
+            >
+              <Text style={styles.numberText}>9</Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
               width: 60,
+              height: 75,
               paddingLeft: 5,
               paddingTop: 10,
               paddingBottom: 5,
             }}
           >
-            <Button onPress={pressSubtract} title="-" color="#424242" accessibilityLabel="minus"/>
+            <TouchableOpacity
+              onPress={pressSubtract}
+              style={styles.symbolButton}
+              accessibilityLabel="minus"
+            >
+              <Text style={styles.symbolText}>-</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.secondNumberContainer}>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressDecimal} title="." color="#AE1D5C" accessibilityLabel="point"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressDecimal}
+              style={styles.numberButton}
+              accessibilityLabel="point"
+            >
+              <Text style={styles.numberText}>.</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 75, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressZero} title="0" color="#AE1D5C" accessibilityLabel="0"/>
+          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressZero}
+              style={styles.numberButton}
+              accessibilityLabel="0"
+            >
+              <Text style={styles.numberText}>0</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ width: 60, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
-          <Button onPress={pressPlus} title="+" color="#424242" accessibilityLabel="plus"/>
+          <View
+            style={{
+              width: 60,
+              height: 75,
+              paddingLeft: 5,
+              paddingTop: 10,
+              paddingBottom: 5,
+            }}
+          >
+            <TouchableOpacity
+              onPress={pressPlus}
+              style={styles.symbolButton}
+              accessibilityLabel="plus"
+            >
+              <Text style={styles.symbolText}>+</Text>
+            </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.equalsNumberContainer}>
-          <View style={{width: 170, paddingTop: 10}}>
-          <Button onPress={pressEquate} title="=" color="#FF6F00" accessibilityLabel="equate"/>
+          <View style={{ width: 170, height: 75, paddingTop: 10 }}>
+            <TouchableOpacity
+              onPress={pressEquate}
+              style={styles.equalsButton}
+              accessibilityLabel="equate"
+            >
+              <Text style={styles.equalsText}>=</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
-
       <View style={styles.clearNumberContainer}>
-        <View style={{ width: 120}}>
-        <Button onPress={pressClear} title="clear" color="#424242" accessibilityLabel="clear"/>
+        <View style={{ width: 120 }}>
+          <TouchableOpacity
+            onPress={pressClear}
+            style={styles.clearButton}
+            accessibilityLabel="clear"
+          >
+            <Text style={styles.clearText}>clear</Text>
+          </TouchableOpacity>
         </View>
       </View>
-      <Display output={output} sum={query} history={queryHistory} />
+      <View style={styles.outputContainer}>
+        <View
+          style={{
+            backgroundColor: "#eeeeee",
+            width: 320,
+            borderRadius: 10,
+            paddingTop: 15,
+            paddingBottom: 10,
+            paddingLeft: 10,
+          }}
+        >
+          <TextInput
+            keyboardType={"number-pad"}
+            onChangeText={(num) => setQuery(num)}
+            style={{ fontSize: 20, fontWeight: "bold" }}
+          >
+            {" "}
+            {query}
+          </TextInput>
+        </View>
+      </View>
+      <Output output={output} history={queryHistory} />
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-
-    fontSize: 75,
-    fontWeight: 'bold',
+  titleText: {
+    fontSize: 50,
+    fontWeight: "bold",
 
   },
   numberContainer: {
-
-
-
-
+  },
+  numberButton: {
+    backgroundColor: "#AE1D5C",
+    height: 75,
+    borderRadius: 5,
+  },
+  numberText: {
+    flex: 1,
+    flexDirection: "row",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#FFFFFF",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  symbolButton: {
+    height: 75,
+    borderRadius: 5,
+    backgroundColor: "#424242",
+  },
+  symbolText: {
+    flex: 1,
+    flexDirection: "row",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#FFFFFF",
+    fontSize: 25,
+    fontWeight: "bold",
   },
   firstNumberContainer: {
-    alignItems: 'flex-start',
-
-    flexDirection: 'row',
-    gap: 2,
-
-    margin: 'auto',
+    alignItems: "flex-start",
+    flexDirection: "row",
+    gap: 5,
+    margin: "auto",
     padding: 5,
-
   },
   secondNumberContainer: {
-    alignItems: 'flex-start',
-    marginLeft: '28.5%',
-    flexDirection: 'row',
-    gap: 2,
-
-    
-    
+    alignItems: "flex-start",
+    marginLeft: "28.5%",
+    flexDirection: "row",
+    gap: 5,
+    paddingTop: 5,
+    paddingBottom: 5
   },
   equalsNumberContainer: {
-    flexDirection: 'row',
-
-
-    margin: 'auto',
-
-
+    flexDirection: "row",
+    margin: "auto",
+  },
+  equalsButton: {
+    backgroundColor: "#FF6F00",
+    height: 75,
+    borderRadius: 5,
+  },
+  equalsText: {
+    flex: 1,
+    flexDirection: "row",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#FFFFFF",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  clearButton: {
+    backgroundColor: "#424242",
+    height: 40,
+    borderRadius: 5,
+  },
+  clearText: {
+    flex: 1,
+    flexDirection: "row",
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "#FFFFFF",
+    fontSize: 25,
   },
   clearNumberContainer: {
-    margin: 'auto',
-
-    
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  outputContainer: {
+    alignItems: "flex-start",
+    marginLeft: 5,
   },
   reactLogo: {
     height: 0,
     width: 0,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
 });
-// const styles = StyleSheet.create({
-//   titleContainer: {
-
-
-//     gap: 8,
-//   },
-//   numberContainer: {
-//     alignContent: 'center',
-
-
-
-//   },
-//   firstNumberContainer: {
-//     alignItems: 'flex-start',
-
-//     flexDirection: 'row',
-
-//     gap: 4,
-//     margin: 'auto',
-//     width: '100%',
-
-//     padding: '2%',
-
-
-//   },
-//   secondNumberContainer: {
-
-//     alignItems: 'flex-start',
-
-//     flexDirection: 'row',
-//     marginLeft: '40%',
-//     gap: 4,
-    
-
-//     padding: '2%',
-    
-//   },
-//   clearNumberContainer: {
-
-//     alignItems: 'flex-start',
-  
-//     flexDirection: 'row',
-//     marginLeft: '40%',
-//     gap: 4,
-    
-
-//     padding: '2%',
-    
-//   },
-//   equalsNumberContainer: {
-
-//   },
-//   reactLogo: {
-//     height: 0,
-//     width: 0,
-//     bottom: 0,
-//     left: 0,
-//     position: 'absolute',
-//   },
-// });
