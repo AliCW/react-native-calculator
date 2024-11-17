@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Button, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import Output from "../../components/Output";
@@ -178,14 +178,14 @@ export default function HomeScreen() {
     setRecentDecimal(false);
     setRecentEquate(true);
     setOutput(calc(split.join('')));
-    if (queryHistory.length >= 6) {
+    if (queryHistory.length >= 7) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, query + `= ${calc(split.join(''))}`].reverse()
+        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`].reverse()
       );
     } else {
       setQueryHistory(
-        [...queryHistory, query + `= ${calc(split.join(''))}`].reverse()
+        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`].reverse()
       );
     }
     setQuery(calc(split.join('')));
@@ -406,7 +406,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.equalsNumberContainer}>
-          <View style={{ width: 170, height: 75, paddingTop: 10 }}>
+          <View style={{ width: 334, height: 85, paddingTop: 10 }}>
             <TouchableOpacity
               onPress={pressEquate}
               style={styles.equalsButton}
@@ -433,7 +433,7 @@ export default function HomeScreen() {
             onChangeText={(num) => setQuery(num)}
             style={{ fontSize: 20, fontWeight: "bold" }}
           >
-            {" "}
+            {""}
             {query}
           </TextInput>
         </View>
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
   firstNumberContainer: {
     alignItems: "flex-start",
     flexDirection: "row",
-    gap: 5,
+    gap: 8,
     margin: "auto",
     padding: 5,
   },
@@ -491,15 +491,20 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     margin: "auto",
     flexDirection: "row",
-    gap: 5,
+    gap: 8,
     paddingTop: 5,
     paddingBottom: 5
   },
   equalsNumberContainer: {
+    alignItems: "flex-start",
     flexDirection: "row",
     margin: "auto",
   },
   equalsButton: {
+    flex: 1,
+    marginTop: 5,
+    marginLeft: 170,
+    flexDirection: "row",
     backgroundColor: "#FF6F00",
     height: 75,
     borderRadius: 5,
