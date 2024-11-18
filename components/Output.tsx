@@ -20,15 +20,15 @@ export default function Output(props: Answer) {
           marginBottom: 5,
         }}
       >
-        <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 25, fontWeight: "bold"}}>
           {props.output}
         </Text>
       </View>
 
       <View
         style={{
-          backgroundColor: "#eeeeee",
-          height: 185,
+          backgroundColor: "#DBDBDB",
+          height: 220,
           width: 320,
           borderRadius: 10,
           paddingTop: 5,

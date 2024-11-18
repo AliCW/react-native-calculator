@@ -4,7 +4,7 @@
     "slug": "calc",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/divideIcon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -43,7 +43,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "04ad3148-06a4-44a7-8b58-148f387e6465"
+        "projectId": "83ea49d4-a25b-42f2-a743-b160d8bf3ef7"
       }
     }
   }

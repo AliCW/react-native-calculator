@@ -1,6 +1,6 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { useState } from "react";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
+
 import Output from "../../components/Output";
 import { calc } from "a-calc/es";
 
@@ -178,14 +178,14 @@ export default function HomeScreen() {
     setRecentDecimal(false);
     setRecentEquate(true);
     setOutput(calc(split.join('')));
-    if (queryHistory.length >= 7) {
+    if (queryHistory.length >= 9) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`].reverse()
+        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`]
       );
     } else {
       setQueryHistory(
-        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`].reverse()
+        [...queryHistory, query.split(/([?=+ ?=* ?=/ ?=-])/g).join(' ') + ` = ${calc(split.join(''))}`]
       );
     }
     setQuery(calc(split.join('')));
@@ -203,14 +203,9 @@ export default function HomeScreen() {
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
+    <ScrollView
+
+      style={styles.content}
     >
 
       <View style={styles.numberContainer}>
@@ -420,7 +415,7 @@ export default function HomeScreen() {
       <View style={styles.outputContainer}>
         <View
           style={{
-            backgroundColor: "#eeeeee",
+            backgroundColor: "#DBDBDB",
             width: 320,
             borderRadius: 10,
             paddingTop: 15,
@@ -439,17 +434,18 @@ export default function HomeScreen() {
         </View>
       </View>
       <Output output={output} history={queryHistory} />
-    </ParallaxScrollView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleText: {
-    fontSize: 50,
-    fontWeight: "bold",
+  content: {
+    flex: 1,
+    padding: 32,
 
   },
   numberContainer: {
+    marginRight: 30,
   },
   numberButton: {
     backgroundColor: "#AE1D5C",
@@ -484,13 +480,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     gap: 8,
-    margin: "auto",
-    padding: 5,
+    paddingTop: 5,
   },
   secondNumberContainer: {
     alignItems: "flex-start",
-    margin: "auto",
     flexDirection: "row",
+
     gap: 8,
     paddingTop: 5,
     paddingBottom: 5
@@ -498,12 +493,15 @@ const styles = StyleSheet.create({
   equalsNumberContainer: {
     alignItems: "flex-start",
     flexDirection: "row",
-    margin: "auto",
+
+
   },
   equalsButton: {
     flex: 1,
     marginTop: 5,
-    marginLeft: 170,
+    marginLeft: 165,
+    marginBottom: 10,
+    marginRight: 5,
     flexDirection: "row",
     backgroundColor: "#FF6F00",
     height: 75,
