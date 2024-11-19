@@ -1,15 +1,16 @@
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import { useState } from "react";
-
-import Output from "../../components/Output";
+import Output from "../assets/components/Output";
 import { calc } from "a-calc/es";
 
-export default function HomeScreen() {
+export default function Index() {
+
   const [query, setQuery] = useState("");
   const [output, setOutput] = useState("");
   const [queryHistory, setQueryHistory] = useState([""]);
   const [recentEquate, setRecentEquate] = useState(false);
   const [recentDecimal, setRecentDecimal] = useState(false);
+
 
   const pressZero = () => {
     if (recentEquate) {
@@ -130,7 +131,7 @@ export default function HomeScreen() {
     }
   };
 
-  const pressSubtract = () => {
+  const pressSubtract = () => { //cannot add a second negative number following symbol eg -9--9 = 0
     if (
       /[+*/-]/g.test(query[query.length - 1])
     ) {
@@ -441,11 +442,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    padding: 32,
+    paddingLeft: 32,
+    paddingTop: 13,
 
   },
   numberContainer: {
-    marginRight: 30,
+
   },
   numberButton: {
     backgroundColor: "#AE1D5C",

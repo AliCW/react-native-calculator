@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "calc",
-    "slug": "calc",
+    "name": "Calc1",
+    "slug": "Calc1",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/divideIcon.png",
+    "icon": "./assets/images/divideIconWhite.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,10 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/divideIconWhite.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aliwhitrow.calc"
+      "package": "com.aliwhitrow.Calc1"
     },
     "web": {
       "bundler": "metro",
@@ -28,7 +28,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/divideIconWhite.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -43,7 +43,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "83ea49d4-a25b-42f2-a743-b160d8bf3ef7"
+        "projectId": "5df3640b-d6b4-455c-a632-89e24db1c9e5"
       }
     }
   }
