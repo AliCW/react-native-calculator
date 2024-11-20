@@ -199,25 +199,26 @@ export default function Index() {
     const split = query.split(/([?=+ ?=* ?=/ ?=-])/g); 
     setRecentDecimal(false);
     setRecentEquate(true);
-    setOutput(calc(split.join('')));
+    setOutput(calc(split.join(''), {_error: "Invalid Equation"}));
     if (queryHistory.length >= 9) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''))}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Invalid Equation"} )}`]
       );
     } else {
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''))}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Invalid Equation"} )}`]
       );
     }
-    setQuery(calc(split.join('')));
-    if(/[.]/g.test(calc(split.join('')))){
+    setQuery(calc(split.join(''),{_error: "Invalid Equation"}));
+    if(/[.]/g.test(calc(split.join(''), {_error: "Invalid Equation"}))){
       setRecentDecimal(true);
     }
   };
 
   const textInputChange = (string: string) => { // allows user to provide incorrect input
     setQuery(string);
+    console.log(string, "textInputChange<<<")
     setShowQuery(formatQuery(string));
   };
 
