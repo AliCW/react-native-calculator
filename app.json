@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/divideIconWhite.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ae1d5c"
       },
       "package": "com.aliwhitrow.Calc1"
     },
