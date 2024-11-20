@@ -4,6 +4,7 @@ import Output from "../assets/components/Output";
 import { calc } from "a-calc/es";
 import { formatQuery } from "../utils/formatQuery";
 
+
 export default function Index() {
   const [query, setQuery] = useState("");
   const [showQuery, setShowQuery] = useState("");
@@ -190,6 +191,35 @@ export default function Index() {
       setShowQuery(query + "÷");
     }
   };
+
+  const pressCloseBracket = () => {
+    if(/[+*/-]/g.test(query[query.length - 1]) || 
+      query.length === 0 ||
+      query[query.length - 1] === "("
+    ) {
+      return;
+    }
+    else {
+      setRecentDecimal(false);
+      setRecentEquate(false);
+      setQuery(query + ")");
+      setShowQuery(query + ")");
+    }
+  };
+
+  const pressOpenBracket = () => {
+    // if(/[+*/-]/g.test(query[query.length - 1]
+    // )
+    // ) {
+    //   return;
+    // }
+    // else {
+      setRecentDecimal(false);
+      setRecentEquate(false);
+      setQuery(query + "(");
+      setShowQuery(query + "(");
+    //}
+  }
 
   const pressEquate = () => { 
     if (/[+*/-]/g.test(query[query.length - 1]) ||
@@ -401,8 +431,28 @@ export default function Index() {
           </View>
         </View>
 
-        <View style={styles.equalsNumberContainer}>
-          <View style={{ width: 334, height: 85, paddingTop: 10 }}>
+        <View style={styles.bottomNumberContainer}>
+          <View style={{ width: 75, height: 85, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressOpenBracket}
+              style={styles.bracketButton}
+              accessibilityLabel="close bracket"
+            >
+              <Text style={styles.numberText}>(</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ width: 75, height: 85, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressCloseBracket}
+              style={styles.bracketButton}
+              accessibilityLabel="close bracket"
+            >
+              <Text style={styles.numberText}>)</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ width: 200, height: 85, paddingTop: 10 }}>
             <TouchableOpacity
               onPress={pressEquate}
               style={styles.equalsButton}
@@ -482,19 +532,27 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5
   },
-  equalsNumberContainer: {
+  bottomNumberContainer: {
     flex: 1,
     flexDirection: "row",   
+    gap: 8,
   },
   equalsButton: {
     flex: 1,
     marginTop: 5,
-    marginLeft: 165,
+    marginLeft: 0,
     marginBottom: 10,
-    marginRight: 5,
+    marginRight: 38,
     flexDirection: "row",
     backgroundColor: "#FF6F00",
     height: 75,
+    borderRadius: 5,
+  },
+  bracketButton: {
+    marginTop: 5,
+
+    backgroundColor: "#AE1D5C",
+    height: 60,
     borderRadius: 5,
   },
   outputContainer: {
