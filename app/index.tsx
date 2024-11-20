@@ -199,26 +199,25 @@ export default function Index() {
     const split = query.split(/([?=+ ?=* ?=/ ?=-])/g); 
     setRecentDecimal(false);
     setRecentEquate(true);
-    setOutput(calc(split.join(''), {_error: "Invalid Equation"}));
+    setOutput(calc(split.join(''), {_error: "Syntax Error"}));
     if (queryHistory.length >= 9) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Invalid Equation"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
       );
     } else {
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Invalid Equation"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
       );
     }
-    setQuery(calc(split.join(''),{_error: "Invalid Equation"}));
-    if(/[.]/g.test(calc(split.join(''), {_error: "Invalid Equation"}))){
+    setQuery(calc(split.join(''),{_error: "Syntax Error"}));
+    if(/[.]/g.test(calc(split.join(''), {_error: "Syntax Error"}))){
       setRecentDecimal(true);
     }
   };
 
-  const textInputChange = (string: string) => { // allows user to provide incorrect input
+  const textInputChange = (string: string) => {
     setQuery(string);
-    console.log(string, "textInputChange<<<")
     setShowQuery(formatQuery(string));
   };
 
