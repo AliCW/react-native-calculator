@@ -45,4 +45,12 @@ describe('Given a query string with no spaces, convert the string to a readable 
         const string = '99÷99';
         expect(formatQuery(string)).toBe('99 ÷ 99');
     });
+    test('Given "9*3.141592654", return "9 × π"', () => {
+        const string = '9*3.141592654';
+        expect(formatQuery(string)).toBe('9 × π');
+    });
+    test('Given "75.2/3.141592654+6*3.141592654+600", return "75.2 ÷ π + 6 × π + 600"', () => {
+        const string = '75.2/3.141592654+6*3.141592654+600';
+        expect(formatQuery(string)).toBe('75.2 ÷ π + 6 × π + 600');
+    });
 });

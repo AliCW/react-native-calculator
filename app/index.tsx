@@ -125,7 +125,7 @@ export default function Index() {
   };
 
   const pressDecimal = () => {
-    if (/[+*/-]/g.test(query[query.length - 1]) ||
+    if (/[+*/%π-]/g.test(query[query.length - 1]) ||
       recentDecimal ||
       query.length === 0) 
       {
@@ -139,7 +139,7 @@ export default function Index() {
   };
 
   const pressPlus = () => {
-    if (/[+*/-]/g.test(query[query.length - 1]) ||
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
       query.length === 0
     ) {
       return;
@@ -154,7 +154,7 @@ export default function Index() {
   const pressSubtract = () => {
 
     if (query.length === 1 && query[query.length - 1] === "-") return;
-    if (/[+*/]/g.test(query[query.length - 1]) || 
+    if (/[+*/%]/g.test(query[query.length - 1]) || 
      query[query.length - 2] === "-" && query[query.length - 1] === "-"
     ) {
       return;
@@ -167,7 +167,7 @@ export default function Index() {
   };
 
   const pressMultiply = () => {
-    if (/[+*/-]/g.test(query[query.length - 1]) ||
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
       query.length === 0
     ) {
       return;
@@ -180,7 +180,7 @@ export default function Index() {
   };
 
   const pressDivide = () => {
-    if (/[+*/-]/g.test(query[query.length - 1]) ||
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
       query.length === 0
     ) {
       return;
@@ -190,6 +190,38 @@ export default function Index() {
       setQuery(query + "/");
       setShowQuery(query + "÷");
     }
+  };
+
+
+  const pressPercentage = () => {
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentDecimal(false);
+      setRecentEquate(false);
+      setQuery(query + "%");
+      setShowQuery(query + "%");
+    }
+  };
+
+
+  const pressBack = () => {
+    setQuery(query.slice(0, query.length - 1));
+    setShowQuery(query.slice(0, query.length - 1));
+
+      setRecentDecimal(false);
+      setRecentEquate(false);
+
+    
+  };
+
+  const pressOpenBracket = () => {
+      setRecentDecimal(false);
+      setRecentEquate(false);
+      setQuery(query + "(");
+      setShowQuery(query + "(");
   };
 
   const pressCloseBracket = () => {
@@ -207,37 +239,24 @@ export default function Index() {
     }
   };
 
-  const pressOpenBracket = () => {
-    // if(/[+*/-]/g.test(query[query.length - 1]
-    // )
-    // ) {
-    //   return;
-    // }
-    // else {
-      setRecentDecimal(false);
-      setRecentEquate(false);
-      setQuery(query + "(");
-      setShowQuery(query + "(");
-    //}
-  }
 
   const pressEquate = () => { 
     if (/[+*/-]/g.test(query[query.length - 1]) ||
       query.length === 0
     )
       return;
-    const split = query.split(/([?=+ ?=* ?=/ ?=-])/g); 
+    const split = query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g); 
     setRecentDecimal(false);
     setRecentEquate(true);
     setOutput(calc(split.join(''), {_error: "Syntax Error"}));
     if (queryHistory.length >= 9) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
       );
     } else {
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
       );
     }
     setQuery(calc(split.join(''),{_error: "Syntax Error"}));
@@ -264,7 +283,7 @@ export default function Index() {
     <ScrollView style={styles.content}> 
       <View>
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressOne}
               style={styles.numberButton}
@@ -274,7 +293,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressTwo}
               style={styles.numberButton}
@@ -284,7 +303,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressThree}
               style={styles.numberButton}
@@ -294,19 +313,20 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 60, height: 75, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
-              onPress={pressDivide}
-              style={styles.symbolButton}
-              accessibilityLabel="divide by"
+              onPress={pressPlus}
+              style={styles.wideSymbolButton}
+              accessibilityLabel="plus"
             >
-              <Text style={styles.numberText}>÷</Text>
+              <Text style={styles.numberText}>+</Text>
             </TouchableOpacity>
           </View>
+
         </View>
 
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressFour}
               style={styles.numberButton}
@@ -316,7 +336,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressFive}
               style={styles.numberButton}
@@ -326,7 +346,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressSix}
               style={styles.numberButton}
@@ -336,19 +356,20 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 60, height: 75, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
-              onPress={pressMultiply}
-              style={styles.symbolButton}
-              accessibilityLabel="multiplied by"
+              onPress={pressSubtract}
+              style={styles.wideSymbolButton}
+              accessibilityLabel="subtract"
             >
-              <Text style={styles.numberText}>×</Text>
+              <Text style={styles.numberText}>-</Text>
             </TouchableOpacity>
           </View>
+
         </View>
 
         <View style={styles.firstNumberContainer}>
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressSeven}
               style={styles.numberButton}
@@ -358,7 +379,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressEight}
               style={styles.numberButton}
@@ -368,7 +389,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10}}>
             <TouchableOpacity
               onPress={pressNine}
               style={styles.numberButton}
@@ -378,19 +399,28 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 60, height: 75, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
-              onPress={pressSubtract}
+              onPress={pressDivide}
               style={styles.symbolButton}
-              accessibilityLabel="minus"
+              accessibilityLabel="divide"
             >
-              <Text style={styles.numberText}>-</Text>
+              <Text style={styles.numberText}>÷</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressPercentage}
+              style={styles.symbolButton}
+              accessibilityLabel="percentage"
+            >
+              <Text style={styles.numberText}>%</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.secondNumberContainer}>
-        <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+        <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
                 onPress={pressClear}
                 style={styles.clearButton}
@@ -400,17 +430,17 @@ export default function Index() {
             </TouchableOpacity>
         </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
               onPress={pressDecimal}
-              style={styles.numberButton}
+              style={styles.bracketButton}
               accessibilityLabel="point"
             >
               <Text style={styles.numberText}>.</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 75, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
               onPress={pressZero}
               style={styles.numberButton}
@@ -420,19 +450,28 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 60, height: 75, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
             <TouchableOpacity
-              onPress={pressPlus}
+              onPress={pressMultiply}
               style={styles.symbolButton}
-              accessibilityLabel="plus"
+              accessibilityLabel="multiply"
             >
-              <Text style={styles.numberText}>+</Text>
+              <Text style={styles.numberText}>×</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+            <TouchableOpacity
+              onPress={pressBack}
+              style={styles.symbolButton}
+              accessibilityLabel="back"
+            >
+              <Text style={styles.numberText}>◄</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.bottomNumberContainer}>
-          <View style={{ width: 75, height: 85, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, paddingRight: 15 }}>
             <TouchableOpacity
               onPress={pressOpenBracket}
               style={styles.bracketButton}
@@ -442,7 +481,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 75, height: 85, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, marginRight: 5 }}>
             <TouchableOpacity
               onPress={pressCloseBracket}
               style={styles.bracketButton}
@@ -452,7 +491,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 200, height: 85, paddingTop: 10 }}>
+          <View style={{ width: 200, height: 75, paddingTop: 5 }}>
             <TouchableOpacity
               onPress={pressEquate}
               style={styles.equalsButton}
@@ -494,12 +533,13 @@ export default function Index() {
 const styles = StyleSheet.create({
   content: {
     flex: 1,
-    paddingLeft: 32,
+    paddingLeft: 25,
     paddingTop: 13,
   },
   numberButton: {
     backgroundColor: "#AE1D5C",
-    height: 75,
+    height: 65,
+    width: 70,
     borderRadius: 5,
   },
   numberText: {
@@ -511,14 +551,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   symbolButton: {
-    width: 75,
-    height: 75,
+    width: 55,
+    height: 65,
+    borderRadius: 5,
+    backgroundColor: "#424242",
+  },
+  wideSymbolButton: {
+    width: 112,
+    height: 65,
     borderRadius: 5,
     backgroundColor: "#424242",
   },
   clearButton: {
     backgroundColor: "#424242",
-    height: 75,
+    height: 135,
+    width: 65,
     borderRadius: 5,
   },
   firstNumberContainer: {
@@ -536,23 +583,22 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",   
     gap: 8,
+    marginLeft: 73,
+    marginBottom: 20,
   },
   equalsButton: {
     flex: 1,
     marginTop: 5,
-    marginLeft: 0,
-    marginBottom: 10,
-    marginRight: 38,
+    marginRight: 87,
     flexDirection: "row",
     backgroundColor: "#FF6F00",
-    height: 75,
+    height: 100,
     borderRadius: 5,
   },
-  bracketButton: {
-    marginTop: 5,
-
-    backgroundColor: "#AE1D5C",
-    height: 60,
+  bracketButton:{
+    backgroundColor: "#DA2571",
+    height: 65,
+    width: 70,
     borderRadius: 5,
   },
   outputContainer: {
