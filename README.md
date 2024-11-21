@@ -26,6 +26,7 @@ Their are numerous approaches to bundling the code, follow the instructions in t
 ![schematic](Screenshot_2_calc.jpg)
 ![schematic](Screenshot_3_calc.jpg)
 ![schematic](Screenshot_4_calc.jpg)
+![schematic](Screenshot_5_calc.jpg)
 
 # Basic Layout to be Attempted
 
