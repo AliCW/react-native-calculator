@@ -4,6 +4,8 @@ Basic calculator application built using React Native with a-calc (https://www.n
 
 ## Setup
 
+The apk can be downloaded here if you want to try to app: https://drive.google.com/file/d/1n0kUcZ220H0bzcjGTGBW9CP4p5Mq9_jN/view?usp=drive_link
+
 Clone the repo:
 
       git clone https://github.com/AliCW/react-native-calculator/tree/main

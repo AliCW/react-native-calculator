@@ -53,4 +53,8 @@ describe('Given a query string with no spaces, convert the string to a readable 
         const string = '75.2/3.141592654+6*3.141592654+600';
         expect(formatQuery(string)).toBe('75.2 ÷ π + 6 × π + 600');
     });
+    test('Given "80056%620", return "80056 % 620"', () => {
+        const string = '80056 % 620';
+        expect(formatQuery(string)).toBe('80056 % 620')
+    })
 });
