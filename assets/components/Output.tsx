@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 interface Answer {
   output: string;
   history: string[];
-}
+};
 
 export default function Output(props: Answer) {
   return (
@@ -20,7 +20,10 @@ export default function Output(props: Answer) {
           marginBottom: 5,
         }}
       >
-        <Text style={{ fontSize: 25, fontWeight: "bold"}}>
+        <Text 
+        style={{ fontSize: 25, fontWeight: "bold"}}
+        accessibilityLabel="equation answer"
+        >
           {props.output}
         </Text>
       </View>
@@ -38,7 +41,12 @@ export default function Output(props: Answer) {
         {props.history.map((query, index) => {
           return (
             <View key={index}>
-              <Text style={{ color: "#808080", paddingTop: 3, paddingLeft: 10, }} key={index}>
+              <Text 
+              style={{ color: "#808080", paddingTop: 3, paddingLeft: 10, }}
+              key={index}
+              accessibilityLabel="equation history"
+              
+              >
                 {query}
               </Text>
             </View>
@@ -47,13 +55,14 @@ export default function Output(props: Answer) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   outputContainer: {
     alignItems: "flex-start",
     flexDirection: "column",
     padding: 5,
+    marginLeft: 3,
   },
   historyContainer: {},
 });

@@ -10,7 +10,7 @@ export default function Index() {
   const [showQuery, setShowQuery] = useState("");
   const [output, setOutput] = useState("");
   const [queryHistory, setQueryHistory] = useState([""]);
-  const [recentEquate, setRecentEquate] = useState(false);
+  const [recentEquate, setRecentEquate] = useState(true);
   const [recentDecimal, setRecentDecimal] = useState(false);
 
   const pressZero = () => {
@@ -125,8 +125,9 @@ export default function Index() {
   };
 
   const pressDecimal = () => {
-    if (/[+*/%π-]/g.test(query[query.length - 1]) ||
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
       recentDecimal ||
+      query[query.length - 1] === "." ||
       query.length === 0) 
       {
         return;
@@ -135,7 +136,7 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + ".");
       setShowQuery(query + ".");
-    }
+    };
   };
 
   const pressPlus = () => {
@@ -148,7 +149,7 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + "+");
       setShowQuery(query + "+");
-    }
+    };
   };
 
   const pressSubtract = () => {
@@ -163,7 +164,7 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + "-");
       setShowQuery(query + "-");
-    }
+    };
   };
 
   const pressMultiply = () => {
@@ -176,7 +177,7 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + "*");
       setShowQuery(query + "×");
-    }
+    };
   };
 
   const pressDivide = () => {
@@ -189,7 +190,7 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + "/");
       setShowQuery(query + "÷");
-    }
+    };
   };
 
 
@@ -203,18 +204,14 @@ export default function Index() {
       setRecentEquate(false);
       setQuery(query + "%");
       setShowQuery(query + "%");
-    }
+    };
   };
-
 
   const pressBack = () => {
     setQuery(query.slice(0, query.length - 1));
     setShowQuery(query.slice(0, query.length - 1));
-
-      setRecentDecimal(false);
-      setRecentEquate(false);
-
-    
+    setRecentDecimal(false);
+    setRecentEquate(false);
   };
 
   const pressOpenBracket = () => {
@@ -275,8 +272,8 @@ export default function Index() {
     setQuery("");
     setShowQuery("");
     setQueryHistory([]);
-    setRecentEquate(false);
-    setRecentDecimal(false);
+    setRecentEquate(true);
+    setRecentDecimal(false); 
   };
 
   return (
@@ -313,7 +310,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressPlus}
               style={styles.wideSymbolButton}
@@ -356,7 +353,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressSubtract}
               style={styles.wideSymbolButton}
@@ -399,7 +396,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressDivide}
               style={styles.symbolButton}
@@ -408,7 +405,7 @@ export default function Index() {
               <Text style={styles.numberText}>÷</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressPercentage}
               style={styles.symbolButton}
@@ -420,7 +417,7 @@ export default function Index() {
         </View>
 
         <View style={styles.secondNumberContainer}>
-        <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
+        <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
                 onPress={pressClear}
                 style={styles.clearButton}
@@ -430,7 +427,7 @@ export default function Index() {
             </TouchableOpacity>
         </View>
 
-          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressDecimal}
               style={styles.bracketButton}
@@ -440,7 +437,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressZero}
               style={styles.numberButton}
@@ -450,7 +447,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressMultiply}
               style={styles.symbolButton}
@@ -459,7 +456,7 @@ export default function Index() {
               <Text style={styles.numberText}>×</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5 }}>
+          <View style={{ width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressBack}
               style={styles.symbolButton}
@@ -471,7 +468,7 @@ export default function Index() {
         </View>
 
         <View style={styles.bottomNumberContainer}>
-          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, paddingRight: 15 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, paddingRight: 15}}>
             <TouchableOpacity
               onPress={pressOpenBracket}
               style={styles.bracketButton}
@@ -481,7 +478,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, marginRight: 5 }}>
+          <View style={{ width: 65, height: 65, paddingTop: 10, paddingBottom: 5, marginRight: 5}}>
             <TouchableOpacity
               onPress={pressCloseBracket}
               style={styles.bracketButton}
@@ -491,7 +488,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 200, height: 75, paddingTop: 5 }}>
+          <View style={{ width: 200, height: 75, paddingTop: 5}}>
             <TouchableOpacity
               onPress={pressEquate}
               style={styles.equalsButton}
@@ -518,6 +515,7 @@ export default function Index() {
             keyboardType={"number-pad"}
             onChangeText={(num) => textInputChange(num)}
             style={{ fontSize: 20, fontWeight: "bold" }}
+            accessibilityLabel="current sum"
           >
             {}
             {formatQuery(showQuery)}
@@ -602,6 +600,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   outputContainer: {
-    marginLeft: 5,
+    marginLeft: 8,
   },
 });
