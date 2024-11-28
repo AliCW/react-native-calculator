@@ -4,7 +4,7 @@ Basic calculator application built using React Native with a-calc (https://www.n
 
 ## Setup
 
-The apk can be downloaded here if you want to try to app: https://drive.google.com/file/d/1n0kUcZ220H0bzcjGTGBW9CP4p5Mq9_jN/view?usp=drive_link
+The apk can be downloaded here if you want to try to app: https://drive.google.com/file/d/1lO-gYeNze0Yk7rvAb5l7tsI2UT_yOPo-/view?usp=drive_link
 
 Clone the repo:
 
@@ -29,6 +29,7 @@ Their are numerous approaches to bundling the code, follow the instructions in t
 ![schematic](Screenshot_3_calc.jpg)
 ![schematic](Screenshot_4_calc.jpg)
 ![schematic](Screenshot_5_calc.jpg)
+![schematic](Screenshot_6_calc.jpg)
 
 # Basic Layout to be Attempted
 

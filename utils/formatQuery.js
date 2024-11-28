@@ -7,7 +7,9 @@ const formatQuery = (string) => {
         return element;
     });
 
-    let split = pi.join("").split(/([?=+ ?=* ?=/ ?=× ?=÷ ?=π ?=%])/g).join(" ");
+    pi = pi.join("").replaceAll("**", "^").split("");
+
+    let split = pi.join("").split(/([?=+ ?=* ?=/ ?=× ?=÷ ?=π ?=% ?=^])/g).join(" ");
 
     split = split.split("").map((element, index) => {
         let returnValue = "";

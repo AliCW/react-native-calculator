@@ -3,6 +3,7 @@ import { useState } from "react";
 import Output from "../assets/components/Output";
 import { calc } from "a-calc/es";
 import { formatQuery } from "../utils/formatQuery";
+import { aCalcFormat } from "../utils/a-calFormat";
 
 
 export default function Index() {
@@ -236,6 +237,19 @@ export default function Index() {
     }
   };
 
+  const pressPower = () => {
+    if (/[+*/%-]/g.test(query[query.length - 1]) ||
+      query.length === 0
+    ) {
+      return;
+    } else {
+      setRecentDecimal(false);
+      setRecentEquate(false);
+      setQuery(query + "**");
+      setShowQuery(query + "^");
+    };
+  };
+
 
   const pressEquate = () => { 
     if (/[+*/-]/g.test(query[query.length - 1]) ||
@@ -245,19 +259,19 @@ export default function Index() {
     const split = query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g); 
     setRecentDecimal(false);
     setRecentEquate(true);
-    setOutput(calc(split.join(''), {_error: "Syntax Error"}));
+    setOutput(calc(aCalcFormat(split), {_error: "Syntax Error"}));
     if (queryHistory.length >= 9) {
       queryHistory.shift();
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(aCalcFormat(split), {_error: "Syntax Error"} )}`]
       );
     } else {
       setQueryHistory(
-        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(split.join(''), {_error: "Syntax Error"} )}`]
+        [...queryHistory, formatQuery(query.split(/([?=+ ?=* ?=/ ?=π ?=% ?=-])/g).join('')) + `   =   ${calc(aCalcFormat(split), {_error: "Syntax Error"} )}`]
       );
     }
-    setQuery(calc(split.join(''),{_error: "Syntax Error"}));
-    if(/[.]/g.test(calc(split.join(''), {_error: "Syntax Error"}))){
+    setQuery(calc(aCalcFormat(split),{_error: "Syntax Error"}));
+    if(/[.]/g.test(calc(aCalcFormat(split), {_error: "Syntax Error"}))){
       setRecentDecimal(true);
     }
   };
@@ -353,13 +367,23 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
-          <View style={{ width: 100, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
+          <View style={{width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
             <TouchableOpacity
               onPress={pressSubtract}
-              style={styles.wideSymbolButton}
+              style={styles.symbolButton}
               accessibilityLabel="subtract"
             >
               <Text style={styles.numberText}>-</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{width: 50, height: 55, paddingLeft: 5, paddingTop: 10, paddingBottom: 5}}>
+            <TouchableOpacity
+              onPress={pressPower}
+              style={styles.symbolButton}
+              accessibilityLabel="power"
+            >
+              <Text style={styles.numberText}>^</Text>
             </TouchableOpacity>
           </View>
 

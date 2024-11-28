@@ -105,4 +105,8 @@ describe('Given a string representing numbers & symbols, split the string & retu
         const string = '18-13-(2+(10-9))';
         expect(calc(string)).toBe('2');
     });
+    test('Given "3**5", return 243', () => {
+        const string = '3**5';
+        expect(calc(string)).toBe('243');
+    });
 });

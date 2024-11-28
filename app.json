@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/divideIconWhite.png",
         "backgroundColor": "#ae1d5c"
       },
-      "package": "com.aliwhitrow.Calc1"
+      "package": "com.aliwhitrow.Calc"
     },
     "web": {
       "bundler": "metro",
